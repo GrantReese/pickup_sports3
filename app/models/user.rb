@@ -8,8 +8,10 @@ class User < ApplicationRecord
     validates :first_name, presence: true
     validates :last_name, presence: true
     
-    has_many :posts
-    has_one :profile
+    has_many :posts, dependent: :destroy 
+    has_one :profile, dependent: :destroy
+    has_many :comments, dependent: :destroy
+    has_one :location, as: :locationable, dependent: :destroy
     
     private
     def validate_username
