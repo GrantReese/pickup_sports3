@@ -12,6 +12,12 @@ class User < ApplicationRecord
     has_one :profile, dependent: :destroy
     has_many :comments, dependent: :destroy
     has_one :location, as: :locationable, dependent: :destroy
+    has_many :events 
+
+    has_many :created_events, class_name: 'Event', foreign_key: 'user_id'
+
+    has_many :event_participants
+    has_many :events, through: :event_participants
     
     private
     def validate_username

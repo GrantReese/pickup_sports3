@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_13_173200) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_13_184122) do
   create_table "comments", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "commentable_type", null: false
@@ -20,6 +20,32 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_13_173200) do
     t.datetime "updated_at", null: false
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "event_participants", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "event_id", null: false
+    t.integer "rating"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_event_participants_on_event_id"
+    t.index ["user_id"], name: "index_event_participants_on_user_id"
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.text "content"
+    t.datetime "start_date_time"
+    t.datetime "end_date_time"
+    t.integer "guests"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_events_on_user_id"
+  end
+
+  create_table "events_sports", id: false, force: :cascade do |t|
+    t.integer "event_id", null: false
+    t.integer "sport_id", null: false
   end
 
   create_table "locations", force: :cascade do |t|
@@ -51,6 +77,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_13_173200) do
     t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
+  create_table "sports", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "username", null: false
     t.string "email", null: false
@@ -61,6 +93,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_13_173200) do
   end
 
   add_foreign_key "comments", "users"
+  add_foreign_key "event_participants", "events"
+  add_foreign_key "event_participants", "users"
+  add_foreign_key "events", "users"
   add_foreign_key "posts", "users"
   add_foreign_key "profiles", "users"
 end
