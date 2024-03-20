@@ -69,7 +69,7 @@ RSpec.describe "Posts", type: :request do
       let(:post) {create(:post)}
 
       before do 
-        post_attributes = attributes_for(:post, content: "updaed content")
+        post_attributes = attributes_for(:post, content: "updated content")
         put "/posts/#{post.id}", params: post_attributes
     end
 
