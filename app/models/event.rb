@@ -23,4 +23,6 @@ class Event < ApplicationRecord
     if end_date_time < start_date_time 
       errors.add(:end_date_time, "can't be before start date time")
     end
-  
+  end
+end
+
